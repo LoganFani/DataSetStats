@@ -15,7 +15,12 @@ co2_col = df['CO2 Emissions (Tons/Capita)']
 
 correlation_result = stats.pearsonr(temperature_col,co2_col)
 
-print(correlation_result[0], correlation_result[1])
+if correlation_result[1] < 0.05: # type: ignore
+    print(f"Correlation results: ({correlation_result[0]}, {correlation_result[1]})")
+    print(f"Since the P-value: {correlation_result[1]} is < 0.05, in this case we reject the null hypothesis.\n")
+else:
+    print(f"Correlation results: ({correlation_result[0]}, {correlation_result[1]})")
+    print(f"Since the P-value: {correlation_result[1]} is > 0.05, in this case we fail to reject the null hypothesis.\n")
 
 #T test
 #H0 There isn't a differencce between the sea level rise before and after 2010
@@ -28,7 +33,13 @@ sea_level_after = df[df["Year"] > 2010]["Sea Level Rise (mm)"]
 
 t_result = stats.ttest_ind(sea_level_before,sea_level_after)
 
-print(t_result[0], t_result[1])
+
+if t_result[1] < 0.05: #type: ignore
+    print(f"T-test results: ({t_result[0]}, {t_result[1]})")
+    print(f"Since the P-value: {t_result[1]} is < 0.05, in this case we reject the null hypothesis.\n")
+else:
+    print(f"T-test results: ({t_result[0]}, {t_result[1]})")
+    print(f"Since the P-value: {t_result[1]} is > 0.05, in this case we fail to reject the null hypothesis.\n")
 
 #Anova
 
@@ -41,4 +52,9 @@ for country in df["Country"].unique():
 
 anova_results = stats.f_oneway(*data_by_country)
 
-print(anova_results[0], anova_results[1])
+if anova_results[1] < 0.05: # type: ignore
+    print(f"Anova results: ({anova_results[0]}, {anova_results[1]})")
+    print(f"Since the P-value: {anova_results[1]} is < 0.05, in this case we reject the null hypothesis.\n")
+else:
+    print(f"Anova results: ({anova_results[0]}, {anova_results[1]})")
+    print(f"Since the P-value: {anova_results[1]} is > 0.05, in this case we fail to reject the null hypothesis.\n")
